@@ -120,14 +120,40 @@ Game.prototype.keyBindings = function () {
         }
     };
     
-    document.onclick = function (e) {
-        var center_x = document.getElementById('snek').offsetWidth/2;
-        var center_y = document.getElementById('snek').offsetWidth/2;
-        console.log(center_x,center_y);
-        
+    document.onmousedown = function (e) {
+		var width = document.getElementById('snek').offsetWidth;
+		var height = document.getElementById('snek').offsetHeight;
+		console.log("width:",width,"height:",height)
+		
+		var center_x = width/2;
+        var center_y = width / 2;
+
+        var bottomRight = angleBetween(center_x, center_y, e.x - center_x, e.y - center_y) < Math.PI/2;
+        var topRight = angleBetween(center_x, -1 * center_y, e.x - center_x, e.y - center_y) < Math.PI/2;
+
+        if (bottomRight) {
+            if (topRight) {
+                if (that.key !== 'left') that.key = 'right';
+            }
+            else {
+                if (that.key !== 'up') that.key = 'down';
+            }
+        }
+        else {
+            if (topRight) {
+               if(that.key !== 'down') that.key = 'up';
+            }
+            else {
+                if (that.key !== 'right') that.key = 'left';
+            }
+        }
     }
 
 };
+
+angleBetween = function (x1, y1, x2, y2) {
+    return (Math.acos((x1 * x2 + y1 * y2) / (Math.sqrt(Math.pow(x1, 2) + Math.pow(y1, 2)) * Math.sqrt(Math.pow(x2, 2) + Math.pow(y2, 2)))))
+}
 
 
 /**
@@ -145,7 +171,7 @@ Game.prototype.gameLoop = function () {
     ctx.fillStyle = "#123";
 
     // add some blur
-    ctx.globalAlpha = 0.5;
+    //ctx.globalAlpha = 0.5;
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // disable blur
@@ -267,8 +293,12 @@ function Food(game){
 
 // create the canvas element
 var canvas = document.createElement("canvas");
-canvas.id = "snek"
+canvas.id = "snek";
 document.body.appendChild(canvas);
+
+console.log(innerWidth,innerHeight);
+
+
 
 /**
  * Game initialization
