@@ -119,6 +119,13 @@ Game.prototype.keyBindings = function () {
                 if (that.key !== 'up') that.key = 'down';
         }
     };
+    
+    document.onclick = function (e) {
+        var center_x = document.getElementById('snek').offsetWidth/2;
+        var center_y = document.getElementById('snek').offsetWidth/2;
+        console.log(center_x,center_y);
+        
+    }
 
 };
 
@@ -260,6 +267,7 @@ function Food(game){
 
 // create the canvas element
 var canvas = document.createElement("canvas");
+canvas.id = "snek"
 document.body.appendChild(canvas);
 
 /**
