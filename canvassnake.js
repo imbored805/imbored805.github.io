@@ -128,8 +128,8 @@ Game.prototype.keyBindings = function () {
 		var center_x = width/2;
         var center_y = width / 2;
 
-        var bottomRight = angleBetween(center_x, center_y, e.x - center_x, e.y - center_y) < Math.PI/2;
-        var topRight = angleBetween(center_x, -1 * center_y, e.x - center_x, e.y - center_y) < Math.PI/2;
+        var bottomRight = dotProd(center_x, center_y, e.x - center_x, e.y - center_y) > 0;
+        var topRight = dotProd(center_x, -1 * center_y, e.x - center_x, e.y - center_y) > 0;
 
         if (bottomRight) {
             if (topRight) {
@@ -151,8 +151,8 @@ Game.prototype.keyBindings = function () {
 
 };
 
-angleBetween = function (x1, y1, x2, y2) {
-    return (Math.acos((x1 * x2 + y1 * y2) / (Math.sqrt(Math.pow(x1, 2) + Math.pow(y1, 2)) * Math.sqrt(Math.pow(x2, 2) + Math.pow(y2, 2)))))
+dotProd = function (x1, y1, x2, y2) {
+    return (x1 * x2 + y1 * y2)
 }
 
 
